@@ -32,6 +32,7 @@ public:
         root = new Node('\0');
     }
     
+    //prefix trie
     void insert(string word){
         Node* temp = root;
         for (char ch: word) {
@@ -42,6 +43,25 @@ public:
             temp = temp->m[ch];
         }
         temp->isTerminal = true;
+    }
+    
+    //suffix trie
+    void insertSuff(string word){
+        Node* temp = root;
+        for (char ch: word) {
+            if(temp->m.count(ch)==0){
+                Node* newNode = new Node(ch);
+                temp->m[ch] = newNode;
+            }
+            temp = temp->m[ch];
+        }
+        temp->isTerminal = true;
+    }
+    
+    void insertS(string word){
+        for(int i=0; word[i] != '\0'; i++){
+            insertSuff(word.substr(i));
+        }
     }
     
     bool search(string word){
@@ -57,12 +77,13 @@ public:
 };
 
 int main(int argc, const char * argv[]) {
-    string words[] = {"apple", "ape", "hello", "hey","hell"};
+    string words = "apple";
+    string suffix[] = {"pple", "ple", "pel"};
     Trie t;
-    for(auto word: words){
-        t.insert(word);
+    t.insertS(words);
+    
+    for(auto sf: suffix){
+        cout<<sf << " : " << (t.search(sf)?"True":"False")<<endl;
     }
-    string key;
-    cin>>key;
-    cout<<key << " : " << (t.search(key)?"True":"False")<<endl;
+    
 }
