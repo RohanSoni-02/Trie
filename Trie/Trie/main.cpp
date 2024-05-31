@@ -6,23 +6,28 @@
 //
 
 #include <iostream>
+#include <unordered_map>
+#include <cstring>
 using namespace std;
+class Trie;
 
 class Node{
-public:
     char data;
     unordered_map<char, Node*> m;
     bool isTerminal;
     
+public:
     Node(char data){
-        data = 'd';
+        data = data;
         isTerminal = false;
     }
+    friend class Trie;
 };
 
 class Trie{
     Node* root;
     
+public:
     Trie(){
         root = new Node('\0');
     }
@@ -52,7 +57,12 @@ class Trie{
 };
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    string words[] = {"apple", "ape", "hello", "hey","hell"};
+    Trie t;
+    for(auto word: words){
+        t.insert(word);
+    }
+    string key;
+    cin>>key;
+    cout<<key << " : " << (t.search(key)?"True":"False")<<endl;
 }
