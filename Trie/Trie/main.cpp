@@ -9,10 +9,11 @@
 using namespace std;
 
 class Node{
+public:
     char data;
     unordered_map<char, Node*> m;
     bool isTerminal;
-public:
+    
     Node(char data){
         data = 'd';
         isTerminal = false;
@@ -24,6 +25,18 @@ class Trie{
     
     Trie(){
         root = new Node('\0');
+    }
+    
+    void insert(string word){
+        Node* temp = root;
+        for (char ch: word) {
+            if(temp->m.count(ch)==0){
+                Node* newNode = new Node(ch);
+                temp->m[ch] = newNode;
+            }
+            temp = temp->m[ch];
+        }
+        temp->isTerminal = true;
     }
 };
 
