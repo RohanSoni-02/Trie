@@ -38,6 +38,17 @@ class Trie{
         }
         temp->isTerminal = true;
     }
+    
+    bool search(string word){
+        Node* temp = root;
+        for(char ch: word){
+            if(temp->m.count(ch)==0){
+                return false;
+            }
+            temp = temp->m[ch];
+        }
+        return temp->isTerminal;
+    }
 };
 
 int main(int argc, const char * argv[]) {
